@@ -1,0 +1,38 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "uy9hqiMiLJwsvcnqVN4Uu"
+uri = "file://artifacts/grooming-galore/public/images/gallery-haircut.png"
+type = "image"
+title = "Luxury haircut styling in modern salon"
+
+[[generated]]
+id = "lbXvnS8jqVavE88FkH0yE"
+uri = "file://artifacts/grooming-galore/public/images/gallery-beard.png"
+type = "image"
+title = "Premium beard grooming session"
+
+[[generated]]
+id = "cvtLkmTHEQJgAoafIHlTQ"
+uri = "file://artifacts/grooming-galore/public/images/gallery-nails.png"
+type = "image"
+title = "Sophisticated nail art treatment"
+
+[[generated]]
+id = "okvL_UZ1J5xEXpYCM5mnR"
+uri = "file://artifacts/grooming-galore/public/images/gallery-facial.png"
+type = "image"
+title = "Relaxing facial spa treatment"
+
+[[generated]]
+id = "NDNpcdqPVIJMnxLRbB6ea"
+uri = "file://artifacts/grooming-galore/public/images/gallery-color.png"
+type = "image"
+title = "Professional hair coloring process"
+
+[[generated]]
+id = "d73WB_Y-iyBTtWC39_Sq4"
+uri = "file://artifacts/grooming-galore/public/images/gallery-interior.png"
+type = "image"
+title = "Upscale salon interior design"

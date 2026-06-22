@@ -1,22 +1,35 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Grooming Galore API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: services
+    description: Salon services
+  - name: offers
+    description: Active discounts and offers
+  - name: testimonials
+    description: Client testimonials
+  - name: academy
+    description: Academy information
+  - name: locations
+    description: Salon locations
+  - name: gallery
+    description: Gallery images
+  - name: stats
+    description: Summary stats
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +37,401 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /services:
+    get:
+      operationId: listServices
+      tags: [services]
+      summary: List all services
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of services
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Service"
+    post:
+      operationId: createService
+      tags: [services]
+      summary: Create a service
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+
+  /services/{id}:
+    get:
+      operationId: getService
+      tags: [services]
+      summary: Get a service
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Service
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+        "404":
+          description: Not found
+    patch:
+      operationId: updateService
+      tags: [services]
+      summary: Update a service
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Service"
+    delete:
+      operationId: deleteService
+      tags: [services]
+      summary: Delete a service
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /offers:
+    get:
+      operationId: listOffers
+      tags: [offers]
+      summary: List active offers
+      responses:
+        "200":
+          description: List of offers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Offer"
+    post:
+      operationId: createOffer
+      tags: [offers]
+      summary: Create an offer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OfferInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Offer"
+
+  /offers/{id}:
+    patch:
+      operationId: updateOffer
+      tags: [offers]
+      summary: Update an offer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OfferUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Offer"
+    delete:
+      operationId: deleteOffer
+      tags: [offers]
+      summary: Delete an offer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /testimonials:
+    get:
+      operationId: listTestimonials
+      tags: [testimonials]
+      summary: List client testimonials
+      responses:
+        "200":
+          description: List of testimonials
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Testimonial"
+    post:
+      operationId: createTestimonial
+      tags: [testimonials]
+      summary: Create a testimonial
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestimonialInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Testimonial"
+
+  /testimonials/{id}:
+    patch:
+      operationId: updateTestimonial
+      tags: [testimonials]
+      summary: Update a testimonial
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestimonialUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Testimonial"
+    delete:
+      operationId: deleteTestimonial
+      tags: [testimonials]
+      summary: Delete a testimonial
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /academy:
+    get:
+      operationId: getAcademy
+      tags: [academy]
+      summary: Get academy information
+      responses:
+        "200":
+          description: Academy info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Academy"
+    patch:
+      operationId: updateAcademy
+      tags: [academy]
+      summary: Update academy information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AcademyUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Academy"
+
+  /locations:
+    get:
+      operationId: listLocations
+      tags: [locations]
+      summary: List all locations
+      responses:
+        "200":
+          description: List of locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Location"
+    post:
+      operationId: createLocation
+      tags: [locations]
+      summary: Create a location
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocationInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Location"
+
+  /locations/{id}:
+    patch:
+      operationId: updateLocation
+      tags: [locations]
+      summary: Update a location
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocationUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Location"
+    delete:
+      operationId: deleteLocation
+      tags: [locations]
+      summary: Delete a location
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /gallery:
+    get:
+      operationId: listGallery
+      tags: [gallery]
+      summary: List gallery images
+      responses:
+        "200":
+          description: Gallery images
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GalleryImage"
+    post:
+      operationId: createGalleryImage
+      tags: [gallery]
+      summary: Add gallery image
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GalleryImageInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GalleryImage"
+
+  /gallery/{id}:
+    delete:
+      operationId: deleteGalleryImage
+      tags: [gallery]
+      summary: Delete a gallery image
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /stats:
+    get:
+      operationId: getStats
+      tags: [stats]
+      summary: Get summary stats
+      responses:
+        "200":
+          description: Stats summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Stats"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +442,332 @@ components:
       required:
         - status
 
+    Service:
+      type: object
+      required: [id, name, category, price, duration]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: ["string", "null"]
+        category:
+          type: string
+        price:
+          type: number
+        discountedPrice:
+          type: ["number", "null"]
+        duration:
+          type: string
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+
+    ServiceInput:
+      type: object
+      required: [name, category, price, duration]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+        discountedPrice:
+          type: ["number", "null"]
+        duration:
+          type: string
+        isActive:
+          type: boolean
+
+    ServiceUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+        discountedPrice:
+          type: ["number", "null"]
+        duration:
+          type: string
+        isActive:
+          type: boolean
+
+    Offer:
+      type: object
+      required: [id, title, description, discountPercent, isActive]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        discountPercent:
+          type: ["number", "null"]
+        discountAmount:
+          type: ["number", "null"]
+        validUntil:
+          type: ["string", "null"]
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+
+    OfferInput:
+      type: object
+      required: [title, description, isActive]
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        discountPercent:
+          type: ["number", "null"]
+        discountAmount:
+          type: ["number", "null"]
+        validUntil:
+          type: ["string", "null"]
+        isActive:
+          type: boolean
+
+    OfferUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        discountPercent:
+          type: ["number", "null"]
+        discountAmount:
+          type: ["number", "null"]
+        validUntil:
+          type: ["string", "null"]
+        isActive:
+          type: boolean
+
+    Testimonial:
+      type: object
+      required: [id, clientName, review, rating]
+      properties:
+        id:
+          type: integer
+        clientName:
+          type: string
+        role:
+          type: ["string", "null"]
+        review:
+          type: string
+        rating:
+          type: integer
+        avatarUrl:
+          type: ["string", "null"]
+        isVisible:
+          type: boolean
+        createdAt:
+          type: string
+
+    TestimonialInput:
+      type: object
+      required: [clientName, review, rating]
+      properties:
+        clientName:
+          type: string
+        role:
+          type: string
+        review:
+          type: string
+        rating:
+          type: integer
+        avatarUrl:
+          type: string
+        isVisible:
+          type: boolean
+
+    TestimonialUpdate:
+      type: object
+      properties:
+        clientName:
+          type: string
+        role:
+          type: string
+        review:
+          type: string
+        rating:
+          type: integer
+        avatarUrl:
+          type: string
+        isVisible:
+          type: boolean
+
+    Academy:
+      type: object
+      required: [id, name, description]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        courses:
+          type: string
+        duration:
+          type: ["string", "null"]
+        fee:
+          type: ["number", "null"]
+        credentialInfo:
+          type: ["string", "null"]
+        internationalRecognition:
+          type: ["string", "null"]
+        inquiryEmail:
+          type: ["string", "null"]
+        inquiryPhone:
+          type: ["string", "null"]
+        isActive:
+          type: boolean
+
+    AcademyUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        courses:
+          type: string
+        duration:
+          type: string
+        fee:
+          type: ["number", "null"]
+        credentialInfo:
+          type: string
+        internationalRecognition:
+          type: string
+        inquiryEmail:
+          type: string
+        inquiryPhone:
+          type: string
+        isActive:
+          type: boolean
+
+    Location:
+      type: object
+      required: [id, name, address, phone]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        phone:
+          type: string
+        email:
+          type: ["string", "null"]
+        openingHours:
+          type: string
+        mapUrl:
+          type: ["string", "null"]
+        isMain:
+          type: boolean
+
+    LocationInput:
+      type: object
+      required: [name, address, phone, openingHours]
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        openingHours:
+          type: string
+        mapUrl:
+          type: string
+        isMain:
+          type: boolean
+
+    LocationUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        openingHours:
+          type: string
+        mapUrl:
+          type: string
+        isMain:
+          type: boolean
+
+    GalleryImage:
+      type: object
+      required: [id, url, alt]
+      properties:
+        id:
+          type: integer
+        url:
+          type: string
+        alt:
+          type: string
+        category:
+          type: ["string", "null"]
+        sortOrder:
+          type: integer
+
+    GalleryImageInput:
+      type: object
+      required: [url, alt]
+      properties:
+        url:
+          type: string
+        alt:
+          type: string
+        category:
+          type: string
+        sortOrder:
+          type: integer
+
+    Stats:
+      type: object
+      required: [totalServices, totalLocations, totalTestimonials, activeOffers]
+      properties:
+        totalServices:
+          type: integer
+        totalLocations:
+          type: integer
+        totalTestimonials:
+          type: integer
+        activeOffers:
+          type: integer
+        yearsOfExperience:
+          type: integer
+        happyClients:
+          type: integer
+        academyStudents:
+          type: integer
