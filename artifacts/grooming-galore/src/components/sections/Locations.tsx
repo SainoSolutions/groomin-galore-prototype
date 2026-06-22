@@ -4,8 +4,9 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export function Locations() {
   const { data: locations = [] } = useListLocations();
+    const safeLocatons = Array.isArray(locations) ? locations : [];
 
-  if (locations.length === 0) return null;
+  if (safeLocatons.length === 0) return null;
 
   return (
     <section id="locations" className="py-24 bg-background">

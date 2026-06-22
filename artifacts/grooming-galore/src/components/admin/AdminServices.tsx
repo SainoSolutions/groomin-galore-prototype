@@ -12,6 +12,7 @@ import { Edit, Trash, Plus } from "lucide-react";
 
 export function AdminServices() {
   const { data: services = [] } = useListServices();
+  const safeServices = Array.isArray(services) ? services : [];
   const createService = useCreateService();
   const updateService = useUpdateService();
   const deleteService = useDeleteService();
@@ -157,7 +158,7 @@ export function AdminServices() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {services.map((service) => (
+            {safeServices.map((service) => (
               <TableRow key={service.id} className="border-border">
                 <TableCell className="font-medium">{service.name}</TableCell>
                 <TableCell>{service.category}</TableCell>
@@ -170,9 +171,9 @@ export function AdminServices() {
                 </TableCell>
               </TableRow>
             ))}
-            {services.length === 0 && (
+            {safeServices.length === 0 && (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-4 text-muted-foreground">No services found.</TableCell>
+                <TableCell colSpan={6} className="text-center py-4 text-muted-foreground">No safeServices found.</TableCell>
               </TableRow>
             )}
           </TableBody>

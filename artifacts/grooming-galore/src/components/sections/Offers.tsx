@@ -5,9 +5,13 @@ import { format } from "date-fns";
 
 export function Offers() {
   const { data: offers = [] } = useListOffers();
-  const activeOffers = offers.filter((o) => o.isActive);
+  
+  // Paste your fix right here:
+  const safeOffers = Array.isArray(offers) ? offers : [];
+  const activeOffers = safeOffers.filter((o) => o.isActive);
 
   if (activeOffers.length === 0) return null;
+
 
   return (
     <section id="offers" className="py-24 bg-card border-y border-border">

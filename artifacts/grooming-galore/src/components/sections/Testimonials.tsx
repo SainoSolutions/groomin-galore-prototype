@@ -11,8 +11,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function Testimonials() {
-  const { data: testimonials = [] } = useListTestimonials();
-  const visibleTestimonials = testimonials.filter((t) => t.isVisible);
+ const { data: testimonials = [] } = useListTestimonials();
+
+// Safely normalize the object into an array if the backend wrapped it
+const safeTestimonials = Array.isArray(testimonials) ? testimonials : [];
+const visibleTestimonials = safeTestimonials.filter((t) => t.isVisible);
 
   if (visibleTestimonials.length === 0) return null;
 

@@ -3,9 +3,10 @@ import { motion } from "framer-motion";
 
 export function Gallery() {
   const { data: gallery = [] } = useListGallery();
+  const safeGallery = Array.isArray(gallery) ? gallery : [];
 
   // If no DB images, use the generated fallbacks for the showcase
-  const images = gallery.length > 0 ? gallery.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)) : [
+  const images = safeGallery.length > 0 ? gallery.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)) : [
     { id: 1, url: "/images/gallery-haircut.png", alt: "Luxury Haircut" },
     { id: 2, url: "/images/gallery-beard.png", alt: "Beard Grooming" },
     { id: 3, url: "/images/gallery-nails.png", alt: "Nail Art" },

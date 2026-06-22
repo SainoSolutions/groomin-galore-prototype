@@ -8,11 +8,12 @@ export function Services() {
   const { data: services = [] } = useListServices();
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
-  const categories = ["All", ...Array.from(new Set(services.map((s) => s.category)))];
+  const categories = ["All", ...Array.from(new Set(Array.isArray(services) ? services.map((s) => s.category) : []))];
 
-  const filteredServices = activeCategory === "All" 
-    ? services.filter(s => s.isActive)
-    : services.filter(s => s.category === activeCategory && s.isActive);
+  const safeServices = Array.isArray(services) ? services : [];
+const filteredServices = activeCategory === "All" 
+  ? safeServices 
+  : safeServices.filter((s) => s.category === activeCategory);
 
   return (
     <section id="services" className="py-24 bg-background">
